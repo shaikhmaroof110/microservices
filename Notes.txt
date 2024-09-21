@@ -1,0 +1,62 @@
+1) check the dependencies.
+2) configuare Database .yaml file.
+3)create entities packae
+4)create Repositories Package
+5) create Controller Package
+
+
+
+==============================
+           ===============Service Discovery =============
+		   Its also one microservice
+1. How to implement ServiceRegistry.
+ Step1. Go to main Application and user @EnableEurekaServer annotation.
+ step2. Do the configuration with .yaml
+ step3. set default port number 8761.
+ step4. hit on chrom ----->  localhost:8761
+ 
+ ===================Implementing ServiceRegistry Client =========
+ 
+ step5.  Go to spring initializer -- add dependencies in dependencies section.
+  1. Cloud BootStrap
+  2. Eureka Discovery Client
+  copy dependency of both and past in your application. (not mandatory.)
+  
+  
+step6. add this below java Version.  (Mandatory)
+ <spring-cloud.version>2023.0.3</spring-cloud.version>
+
+step7.  add dependency management below dependencies tag. (Mandatory)
+ <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+step7. Go to main application and use @EnableEurekaClient in UserService, HotelService, RatingService.
+
+step8.Application.yaml file add confoiguration.
+
+  application:
+    name: USER_SERVICE
+	
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+
+step9. Go to main class of user service and run it --and check on localhost:8761
+ you will able to see the service is registred.
+
+============================================
+
